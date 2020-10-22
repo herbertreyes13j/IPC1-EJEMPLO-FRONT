@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Registro de Usuario</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" onsubmit="return false">
+					<span class="login100-form-title">
+						Registrar Usuario
+					</span>
+
+					<div class="wrap-input100 validate-input" >
+						<input class="input100" type="text" id="nombre" name="name" placeholder="Nombre">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" >
+						<input class="input100" type="text" name="apellido" id="apellido" placeholder="Apellido">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" >
+						<input class="input100" type="text" name="username" id="username" placeholder="Username">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" id="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" onclick="registrar()">
+							Registrar
+						</button>
+					</div>
+
+
+
+					<div class="text-center p-t-136">
+						<a class="txt2" href="../Login/Login.html">
+							Iniciar Sesion
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+	<script>
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		headers.append('Accept', 'application/json');
+		headers.append('Access-Control-Allow-Origin', 'http://localhost:5001');
+		headers.append('Access-Control-Allow-Credentials', 'true');
+		headers.append('GET', 'POST', 'OPTIONS');
+		function registrar(){
+			//Obteniendo la data para el registro
+			let nomb = document.getElementById("nombre").value;
+			let apel = document.getElementById("apellido").value;
+			let user = document.getElementById("username").value;
+			let pass = document.getElementById("pass").value;
+			//Mando a hacer la peticion
+			fetch('http://localhost:5001/insertar', {
+  				method: 'POST',
+  				headers: headers,
+  				body: `{  
+					"nombre":"${nomb}",
+					"apellido":"${apel}",
+    				"username":"${user}",
+        			"password":"${pass}"
+                     }`,
+				})
+			//Aca espero a mi respuesta
+			.then(response => response.json())
+			//Aca yo ya trabajo con la respuesta
+			.then(data => {
+				alert(data.data)
+			})
+			.catch((error) => {
+  				console.error('Error:', error);
+			});
+
+		}
+		
+	</script>
+</body>
+</html>
